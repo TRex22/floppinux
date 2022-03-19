@@ -38,7 +38,7 @@ all: get_linux compile_linux download_toolchain get_busybox compile_busybox make
 		get_nano compile_nano
 
 allconfig: get_linux configure_linux compile_linux download_toolchain get_busybox configure_busybox \
-		compile_busybox make_rootfs make_floppy_image get_nano compile_nano
+		compile_busybox make_rootfs make_floppy_image
 
 rebuild: clean_filesystem compile_linux compile_busybox make_rootfs make_floppy_image
 
@@ -111,11 +111,12 @@ endif
 	wget -c https://www.nano-editor.org/dist/v6/nano-6.2.tar.xz -O $(NANO_DIR)/nano-6.2.tar.xz
 	tar -xvf $(NANO_DIR)/nano-6.2.tar.xz -C $(NANO_DIR)/
 	mv -f $(NANO_DIR)/nano-6.2/* $(NANO_DIR) # TODO: Fix this
-	mv $(NANO_DIR)/src/nano $(FILESYSTEM_DIR)
 
 compile_nano:
 	cd $(NANO_DIR) && ./configure
 	$(MAKE) ARCH=x86 -C $(NANO_DIR) -j $(CORES)
+	mkdir -p $(FILESYSTEM_DIR)
+	mv $(NANO_DIR)/src/nano $(FILESYSTEM_DIR)/
 
 make_rootfs:
 	mkdir -p $(FILESYSTEM_DIR)/{dev,proc,etc/init.d,sys,tmp}
@@ -150,7 +151,7 @@ size:
 	ls -lah $(MOUNT_POINT)
 	sudo umount $(MOUNT_POINT)
 
-clean: clean_linux clean_busybox clean_filesystem
+clean: clean_linux clean_busybox clean_nano clean_filesystem
 
 clean_linux:
 	$(MAKE) -C $(LINUX_DIR) clean
@@ -158,6 +159,9 @@ clean_linux:
 
 clean_busybox:
 	$(MAKE) -C $(BUSYBOX_DIR) clean
+
+clean_nano:
+	rm -rf $(NANO_DIR)
 
 clean_filesystem:
 	sudo rm -rf $(FILESYSTEM_DIR)
