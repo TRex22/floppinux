@@ -22,3 +22,11 @@ Read only the manual:
 
 Code refactored. Smaller builds. Instructions for 64-bit host OS.
 Read more at: https://bits.p1x.in/floppinux-0-2-2/
+
+## Quick start
+1. Compile:
+`make all`
+2. Run:
+`qemu-system-i386 -fda floppinux.img`
+`qemu-system-i386 -m 24 -fda -drive format=raw,file=floppinux.img`
+`qemu-system-x86_64 -m 24 -drive format=raw,file=floppinux.img,index=0,if=floppy`
