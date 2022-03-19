@@ -1,41 +1,41 @@
 # Detected Variables
-CORES := $(shell nproc)
-BASE := $(shell pwd)
-SYS_ARCH := $(shell uname -p)
-SHELL := /bin/bash
+CORES 					:= $(shell nproc)
+BASE 						:= $(shell pwd)
+SYS_ARCH 				:= $(shell uname -p)
+SHELL 					:= /bin/bash
 
 # Config Variables
-ARCH			= x86
-LINUX_DIR		= linux
-LINUX_CFG		= $(LINUX_DIR)/.config
-BUSYBOX_DIR		= busybox
-BUSYBOX_CFG		= $(BUSYBOX_DIR)/.config
+ARCH						= x86
+LINUX_DIR				= linux
+LINUX_CFG				= $(LINUX_DIR)/.config
+BUSYBOX_DIR			= busybox
+BUSYBOX_CFG			= $(BUSYBOX_DIR)/.config
 NANO_DIR        = nano
-FILES_DIR		= files
+FILES_DIR				= files
 FILESYSTEM_DIR	= filesystem
-MOUNT_POINT		= /mnt/disk
-INITTAB			= $(FILES_DIR)/inittab
-RC				= $(FILES_DIR)/rc
-SYSLINUX_CFG	= $(FILES_DIR)/syslinux.cfg
-TOOLCHAIN_DIR	= i486-linux-musl-cross
-WELCOME			= $(FILES_DIR)/welcome
-ROOTFS_SIZE		= 1440
+MOUNT_POINT			= /mnt/disk
+INITTAB					= $(FILES_DIR)/inittab
+RC							= $(FILES_DIR)/rc
+SYSLINUX_CFG		= $(FILES_DIR)/syslinux.cfg
+TOOLCHAIN_DIR		= i486-linux-musl-cross
+WELCOME					= $(FILES_DIR)/welcome
+ROOTFS_SIZE			= 1440
 
 # Generated Files
-KERNEL			= bzImage
-ROOTFS			= rootfs.cpio.xz
-FSIMAGE			= floppinux.img
+KERNEL					= bzImage
+ROOTFS					= rootfs.cpio.xz
+FSIMAGE					= floppinux.img
 
 # Recipe Files
-BZIMAGE		= $(LINUX_DIR)/arch/$(ARCH)/boot/$(KERNEL)
-INIT		= $(FILESYSTEM_DIR)/sbin/init
+BZIMAGE					= $(LINUX_DIR)/arch/$(ARCH)/boot/$(KERNEL)
+INIT						= $(FILESYSTEM_DIR)/sbin/init
 
 .SILENT: download_toolchain
 
 .PHONY: all allconfig rebuild test_filesystem test_floppy_image size clean clean_linux clean_busybox clean_filesystem
 
-all: get_linux compile_linux download_toolchain get_busybox compile_busybox make_rootfs make_floppy_image \
-		get_nano compile_nano
+all: get_linux compile_linux download_toolchain get_busybox compile_busybox get_nano compile_nano \
+		make_rootfs make_floppy_image
 
 allconfig: get_linux configure_linux compile_linux download_toolchain get_busybox configure_busybox \
 		compile_busybox make_rootfs make_floppy_image
