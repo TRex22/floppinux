@@ -162,6 +162,7 @@ clean_busybox:
 
 clean_nano:
 	rm -rf $(NANO_DIR)
+	rm $(FILESYSTEM_DIR)/nano
 
 clean_filesystem:
 	sudo rm -rf $(FILESYSTEM_DIR)
