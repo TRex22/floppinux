@@ -10,6 +10,7 @@ LINUX_DIR		= linux
 LINUX_CFG		= $(LINUX_DIR)/.config
 BUSYBOX_DIR		= busybox
 BUSYBOX_CFG		= $(BUSYBOX_DIR)/.config
+NANO_DIR        = nano
 FILES_DIR		= files
 FILESYSTEM_DIR	= filesystem
 MOUNT_POINT		= /mnt/disk
@@ -33,10 +34,11 @@ INIT		= $(FILESYSTEM_DIR)/sbin/init
 
 .PHONY: all allconfig rebuild test_filesystem test_floppy_image size clean clean_linux clean_busybox clean_filesystem
 
-all: get_linux compile_linux download_toolchain get_busybox compile_busybox make_rootfs make_floppy_image
+all: get_linux compile_linux download_toolchain get_busybox compile_busybox make_rootfs make_floppy_image \
+		get_nano compile_nano
 
 allconfig: get_linux configure_linux compile_linux download_toolchain get_busybox configure_busybox \
-		compile_busybox make_rootfs make_floppy_image
+		compile_busybox make_rootfs make_floppy_image get_nano compile_nano
 
 rebuild: clean_filesystem compile_linux compile_busybox make_rootfs make_floppy_image
 
@@ -98,6 +100,22 @@ endif
 	$(MAKE) ARCH=x86 -C $(BUSYBOX_DIR) -j $(CORES)
 	$(MAKE) ARCH=x86 -C $(BUSYBOX_DIR) install
 	mv $(BUSYBOX_DIR)/_install $(FILESYSTEM_DIR)
+
+get_nano:
+ifneq ($(wildcard $(BUSYBOX_DIR)),)
+	@echo "Nano directory found, removing folder..."
+	rm -rf $(NANO_DIR)
+endif
+
+	mkdir -p $(NANO_DIR)
+	wget -c https://www.nano-editor.org/dist/v6/nano-6.2.tar.xz -O $(NANO_DIR)/nano-6.2.tar.xz
+	tar -xvf $(NANO_DIR)/nano-6.2.tar.xz -C $(NANO_DIR)/
+	mv -f $(NANO_DIR)/nano-6.2/* $(NANO_DIR) # TODO: Fix this
+	mv $(NANO_DIR)/src/nano $(FILESYSTEM_DIR)
+
+compile_nano:
+	cd $(NANO_DIR) && ./configure
+	$(MAKE) ARCH=x86 -C $(NANO_DIR) -j $(CORES)
 
 make_rootfs:
 	mkdir -p $(FILESYSTEM_DIR)/{dev,proc,etc/init.d,sys,tmp}

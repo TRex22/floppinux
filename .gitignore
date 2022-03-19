@@ -1,5 +1,6 @@
 linux/
 busybox/
+nano/
 i486-linux-musl-cross*
 filesystem/
 bzImage
