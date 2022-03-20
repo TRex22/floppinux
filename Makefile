@@ -34,11 +34,16 @@ INIT						= $(FILESYSTEM_DIR)/sbin/init
 
 .PHONY: all allconfig rebuild test_filesystem test_floppy_image size clean clean_linux clean_busybox clean_filesystem
 
-all: get_linux compile_linux download_toolchain get_busybox compile_busybox get_nano compile_nano \
-		make_rootfs make_floppy_image
+base: get_linux compile_linux download_toolchain get_busybox compile_busybox
+
+create_floppy_image: make_rootfs make_floppy_image
+
+all: base create_floppy_image
 
 allconfig: get_linux configure_linux compile_linux download_toolchain get_busybox configure_busybox \
 		compile_busybox make_rootfs make_floppy_image
+
+with_nano: base get_nano compile_nano create_floppy_image
 
 rebuild: clean_filesystem compile_linux compile_busybox make_rootfs make_floppy_image
 
