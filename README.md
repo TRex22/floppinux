@@ -28,7 +28,7 @@ Read more at: https://bits.p1x.in/floppinux-0-2-2/
 ### Debian
 `sudo apt install flex bison libncurses-dev qemu-system-x86 syslinux`
 ### Arch
-`pacman -S flex bison libncurses-dev qemu-system-x86 syslinux mtools`
+`pacman -S flex bison libncurses-dev qemu-system-x86 syslinux mtools qemu-arch-extras `
 2. Compile:
 `make all`
 3. Run:
