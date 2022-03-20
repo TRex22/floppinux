@@ -99,7 +99,7 @@ ifeq ($(SYS_ARCH),x86_64)
 endif
 	$(MAKE) ARCH=x86 -C $(BUSYBOX_DIR) -j $(CORES)
 	$(MAKE) ARCH=x86 -C $(BUSYBOX_DIR) install
-	mv $(BUSYBOX_DIR)/_install $(FILESYSTEM_DIR)
+	sudo mv $(BUSYBOX_DIR)/_install $(FILESYSTEM_DIR)
 
 get_nano:
 ifneq ($(wildcard $(BUSYBOX_DIR)),)
@@ -116,7 +116,7 @@ compile_nano:
 	cd $(NANO_DIR) && ./configure
 	$(MAKE) ARCH=x86 -C $(NANO_DIR) -j $(CORES)
 	mkdir -p $(FILESYSTEM_DIR)/bin/
-	mv $(NANO_DIR)/src/nano $(FILESYSTEM_DIR)/bin/
+# 	mv $(NANO_DIR)/src/nano $(FILESYSTEM_DIR)/bin/
 
 make_rootfs:
 	mkdir -p $(FILESYSTEM_DIR)/{dev,proc,etc/init.d,sys,tmp}
@@ -162,7 +162,7 @@ clean_busybox:
 
 clean_nano:
 	rm -rf $(NANO_DIR)
-	rm $(FILESYSTEM_DIR)/nano
+	rm -f $(FILESYSTEM_DIR)/nano
 
 clean_filesystem:
 	sudo rm -rf $(FILESYSTEM_DIR)
