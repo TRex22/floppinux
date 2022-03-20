@@ -28,9 +28,10 @@ Read more at: https://bits.p1x.in/floppinux-0-2-2/
 ### Debian
 `sudo apt install flex bison libncurses-dev qemu-system-x86 syslinux`
 ### Arch
-`yay -S flex bison libncurses-dev syslinux mtools qemu-arch-extra-git`
+`yay -S flex bison libncurses-dev syslinux mtools qemu-arch-extra-git cpio`
 2. Compile:
 `make all`
+`make with_nano`
 3. Run:
 ### 386 compatibility
 `qemu-system-i386 -fda floppinux.img`
