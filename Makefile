@@ -113,7 +113,7 @@ endif
 	mv -f $(NANO_DIR)/nano-6.2/* $(NANO_DIR) # TODO: Fix this
 
 compile_nano:
-	cd $(NANO_DIR) && ./configure
+	cd $(NANO_DIR) && ./configure --enable-tiny
 	$(MAKE) ARCH=x86 -C $(NANO_DIR) -j $(CORES)
 	mkdir -p $(FILESYSTEM_DIR)/bin
 	mv $(NANO_DIR)/src/nano $(FILESYSTEM_DIR)/bin
