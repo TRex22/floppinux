@@ -42,7 +42,7 @@ Read more at: https://bits.p1x.in/floppinux-0-2-2/
 `qemu-system-x86_64 -m 24 -drive format=raw,file=floppinux.img,index=0,if=floppy`
 
 ## TODO
-[] Complete Nano
+[] Nano
 [] Wget
 [] Network Drivers
 [] Free
