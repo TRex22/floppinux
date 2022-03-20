@@ -88,10 +88,10 @@ ifneq ($(wildcard $(BUSYBOX_DIR)),)
 else
 	@echo "Busybox directory not found, cloning repo..."
 	git clone https://git.busybox.net/busybox/ $(BUSYBOX_DIR)
-	cp $(FILES_DIR)/busybox-config $(BUSYBOX_CFG)
 endif
 
 configure_busybox:
+	cp $(FILES_DIR)/busybox-config $(BUSYBOX_CFG)
 	$(MAKE) ARCH=x86 -C $(BUSYBOX_DIR) allnoconfig
 	$(MAKE) ARCH=x86 -C $(BUSYBOX_DIR) menuconfig
 
