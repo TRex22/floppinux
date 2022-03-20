@@ -32,6 +32,10 @@ Read more at: https://bits.p1x.in/floppinux-0-2-2/
 2. Compile:
 `make all`
 3. Run:
+### 386 compatibility
 `qemu-system-i386 -fda floppinux.img`
 `qemu-system-i386 -m 24 -fda -drive format=raw,file=floppinux.img`
+`qemu-system-i386 -m 24 -drive format=raw,file=floppinux.img,index=0,if=floppy`
+
+### Modern Compatibility
 `qemu-system-x86_64 -m 24 -drive format=raw,file=floppinux.img,index=0,if=floppy`
