@@ -115,8 +115,8 @@ endif
 compile_nano:
 	cd $(NANO_DIR) && ./configure
 	$(MAKE) ARCH=x86 -C $(NANO_DIR) -j $(CORES)
-	mkdir -p $(FILESYSTEM_DIR)
-	mv $(NANO_DIR)/src/nano $(FILESYSTEM_DIR)/
+	mkdir -p $(FILESYSTEM_DIR)/bin/
+	mv $(NANO_DIR)/src/nano $(FILESYSTEM_DIR)/bin/
 
 make_rootfs:
 	mkdir -p $(FILESYSTEM_DIR)/{dev,proc,etc/init.d,sys,tmp}
